@@ -1,44 +1,34 @@
-<p id="notice"><%= notice %></p>
+<%- model_class = Product -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => Product %></h1>
+</div>
 
-<p>
-  <strong>Price:</strong>
-  <%= @product.price %>
-</p>
+<div class="fieldset">
+  <dl>
+      <dt class="label label-default"><%= model_class.human_attribute_name(:price) %></dt>
+      <dd><pre class="prettyprint"><%= @product.price %></pre></dd>
+      <dt class="label label-default"><%= model_class.human_attribute_name(:name) %></dt>
+      <dd><pre class="prettyprint"><%= @product.name %></pre></dd>
+      <dt class="label label-default"><%= model_class.human_attribute_name(:brand) %></dt>
+      <dd><pre class="prettyprint"><%= @product.brand %></pre></dd>
+      <dt class="label label-default"><%= model_class.human_attribute_name(:is_published) %></dt>
+      <dd><pre class="prettyprint"><%= @product.is_published %></pre></dd>
+      <dt class="label label-default"><%= model_class.human_attribute_name(:asin) %></dt>
+      <dd><pre class="prettyprint"><%= @product.asin %></pre></dd>
+      <dt class="label label-default"><%= model_class.human_attribute_name(:author) %></dt>
+      <dd><pre class="prettyprint"><%= @product.author %></pre></dd>
+  </dl>
+</div>
 
-<p>
-  <strong>Name:</strong>
-  <%= @product.name %>
-</p>
+<div class="form-group">
+  <%= link_to t('.back', :default => t("helpers.links.back")),
+              products_path, :class => 'btn btn-default'  %>
+  <%= link_to t('.edit', :default => t("helpers.links.edit")),
+              edit_product_path(@product), :class => 'btn btn-default' %>
+  <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+              product_path(@product),
+              :method => 'delete',
+              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+              :class => 'btn btn-danger' %>
+</div>
 
-<p>
-  <strong>Brand:</strong>
-  <%= @product.brand %>
-</p>
-
-<p>
-  <strong>User:</strong>
-  <%= @product.user %>
-</p>
-
-<p>
-  <strong>Is published:</strong>
-  <%= @product.is_published %>
-</p>
-
-<p>
-  <strong>Collection:</strong>
-  <%= @product.collection %>
-</p>
-
-<p>
-  <strong>Asin:</strong>
-  <%= @product.asin %>
-</p>
-
-<p>
-  <strong>Author:</strong>
-  <%= @product.author %>
-</p>
-
-<%= link_to 'Edit', edit_product_path(@product) %> |
-<%= link_to 'Back', products_path %>

@@ -1,39 +1,46 @@
-<h1>Listing products</h1>
-
-<table>
+<%- model_class = Product -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => Product %></h1>
+</div>
+<table class="table table-striped">
   <thead>
     <tr>
-      <th>Price</th>
-      <th>Name</th>
-      <th>Brand</th>
-      <th>User</th>
-      <th>Is published</th>
-      <th>Collection</th>
-      <th>Asin</th>
-      <th>Author</th>
-      <th colspan="3"></th>
+      <th>ID</th>
+      <th><%= model_class.human_attribute_name(:price) %></th>
+      <th><%= model_class.human_attribute_name(:name) %></th>
+      <th><%= model_class.human_attribute_name(:brand) %></th>
+      <th><%= model_class.human_attribute_name(:is_published) %></th>
+      <th><%= model_class.human_attribute_name(:asin) %></th>
+      <th><%= model_class.human_attribute_name(:author) %></th>
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
-
   <tbody>
     <% @products.each do |product| %>
       <tr>
+        <td><%= product.id %></td>
         <td><%= product.price %></td>
         <td><%= product.name %></td>
         <td><%= product.brand %></td>
-        <td><%= product.user %></td>
         <td><%= product.is_published %></td>
-        <td><%= product.collection %></td>
         <td><%= product.asin %></td>
         <td><%= product.author %></td>
-        <td><%= link_to 'Show', product %></td>
-        <td><%= link_to 'Edit', edit_product_path(product) %></td>
-        <td><%= link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%=l product.created_at, format: :long %></td>
+        <td>
+          <%= link_to product_path(product), :class => 'btn btn-xs', :title => "#{ t('.show', :default => t('helpers.links.show')) }" do %>
+            <%= glyph 'info-sign' %>
+            <%= glyph 'pencil' %>
+          <%- end -%>
+          <%= link_to product_path(product), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-xs', :title => "#{ t('.destroy', :default => t('helpers.links.destroy')) }" do %>
+            <%= glyph 'remove' %>
+          <%- end -%>
+        </td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<br>
-
-<%= link_to 'New Product', new_product_path %>
+<%= link_to t('.new', :default => t("helpers.links.new")),
+            new_product_path,
+            :class => 'btn btn-primary' %>
