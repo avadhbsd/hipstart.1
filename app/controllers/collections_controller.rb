@@ -29,6 +29,7 @@ class CollectionsController < ApplicationController
   # POST /collections.json
   def create
     @collection = Collection.new(collection_params)
+    @collection.user = current_user
 
     respond_to do |format|
       if @collection.save
