@@ -1,17 +1,40 @@
-<%= simple_form_for(@profile) do |f| %>
-  <%= f.error_notification %>
-
-  <div class="form-inputs">
-    <%= f.association :user %>
-    <%= f.input :name %>
-    <%= f.input :short_bio %>
-    <%= f.input :youtube_url %>
-    <%= f.input :facebok_url %>
-    <%= f.input :twitter_url %>
-    <%= f.association :user %>
+<%= form_for @profile, :html => { :class => 'form-horizontal form-model' } do |f| %>
+  <div class="form-group">
+    <%= f.label :name, :class => 'control-label col-md-2' %>
+    <div class="col-md-10">
+      <%= f.text_field :name, :class => 'text-field form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :short_bio, :class => 'control-label col-md-2' %>
+    <div class="col-md-10">
+      <%= f.text_field :short_bio, :class => 'text-field form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :youtube_url, :class => 'control-label col-md-2' %>
+    <div class="col-md-10">
+      <%= f.text_field :youtube_url, :class => 'text-field form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :facebok_url, :class => 'control-label col-md-2' %>
+    <div class="col-md-10">
+      <%= f.text_field :facebok_url, :class => 'text-field form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :twitter_url, :class => 'control-label col-md-2' %>
+    <div class="col-md-10">
+      <%= f.text_field :twitter_url, :class => 'text-field form-control' %>
+    </div>
   </div>
 
-  <div class="form-actions">
-    <%= f.button :submit %>
+  <div class="form-group">
+    <div class='col-md-offset-2 col-md-10'>
+      <%= f.submit nil, :class => 'btn btn-primary' %>
+      <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                  profiles_path, :class => 'btn btn-default' %>
+    </div>
   </div>
 <% end %>

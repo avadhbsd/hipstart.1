@@ -1,6 +1,5 @@
-<h1>Editing profile</h1>
-
-<%= render 'form' %>
-
-<%= link_to 'Show', @profile %> |
-<%= link_to 'Back', profiles_path %>
+<%- model_class = Profile -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => [:'helpers.titles.edit', 'Edit %{model}'], :model => Profile %></h1>
+</div>
+<%= render :partial => 'form' %>
