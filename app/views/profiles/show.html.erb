@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @profile.user %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @profile.name %>
+</p>
+
+<p>
+  <strong>Short bio:</strong>
+  <%= @profile.short_bio %>
+</p>
+
+<p>
+  <strong>Youtube url:</strong>
+  <%= @profile.youtube_url %>
+</p>
+
+<p>
+  <strong>Facebok url:</strong>
+  <%= @profile.facebok_url %>
+</p>
+
+<p>
+  <strong>Twitter url:</strong>
+  <%= @profile.twitter_url %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @profile.user %>
+</p>
+
+<%= link_to 'Edit', edit_profile_path(@profile) %> |
+<%= link_to 'Back', profiles_path %>
