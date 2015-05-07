@@ -5,8 +5,73 @@ class ProductsController < ApplicationController
 
   before_action :set_product, only: [:show, :edit, :update, :destroy, :vote]
 
+    
+  def amazon_url
+    
+    url = params[:amazone_product_page_url]
+    asin = url.scan(/http:\/\/(?:www\.|)amazon\.in\/(?:gp\/product|[^\/]+\/dp|dp)\/([^\/]+)/)
+    @asin = asin[0]
+    request = Vacuum.new
+    request = Vacuum.new('IN')
+
+    request.configure(
+        aws_access_key_id: 'AKIAIWKESBQCDOOHGX5A',
+        aws_secret_access_key: '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',
+        associate_tag: 'hipstart-21'
+    )
+
+    params = {
+      'ItemId' => @asin.first,
+      'ResponseGroup' => "Medium,Images"
+    }
+
+
+    raw_product = request.item_lookup(query: params)
+    @hashed_product = raw_product.to_h
+    
+    
+    @product_from_amazon = Product.new
+     
+    @product_from_amazon.name = @hashed_product["ItemLookupResponse"]["Items"]["Item"]["ItemAttributes"]["Title"]
+    @product_from_amazon.brand = @hashed_product["ItemLookupResponse"]["Items"]["Item"]["ItemAttributes"]["Brand"]
+    @product_from_amazon.asin = @hashed_product["ItemLookupResponse"]["Items"]["Item"]["ASIN"]
+    @product_from_amazon.author = ""
+    @product_from_amazon.small_image_url = @hashed_product["ItemLookupResponse"]["Items"]["Item"]["SmallImage"]["URL"]
+    @product_from_amazon.med_image_url = @hashed_product["ItemLookupResponse"]["Items"]["Item"]["MediumImage"]["URL"]
+    @product_from_amazon.big_image_url = @hashed_product["ItemLookupResponse"]["Items"]["Item"]["LargeImage"]["URL"]
+    @product_from_amazon.product_page_url = @hashed_product["ItemLookupResponse"]["Items"]["Item"]["DetailPageURL"]
+    @product_from_amazon.price = search_hash(@hashed_product, "FormattedPrice")
+      
+    
+    
+    c = Category.new
+    c.name = @hashed_product["ItemLookupResponse"]["Items"]["Item"]["ItemAttributes"]["ProductGroup"]
+    
+    @product_from_amazon.categories << c
+    
+    @product_from_amazon.save
+    
+    redirect_to @product_from_amazon
+    
+  end
+  
+  
+    def search_hash(hash, search)
+      return hash[search] if hash.fetch(search, false)
+    
+      hash.keys.each do |k|
+        answer = search_hash(hash[k], search) if hash[k].is_a? Hash
+        return answer if answer
+      end
+    
+      false
+    end
+
+
+  
   # GET /products
   # GET /products.json
+  
   def index
     @products = Product.all
   end
@@ -20,6 +85,11 @@ class ProductsController < ApplicationController
   def new
     @product = Product.new
   end
+  
+  
+  
+  
+  
 
   # GET /products/1/edit
   def edit

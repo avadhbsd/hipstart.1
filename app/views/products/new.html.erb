@@ -1,6 +1,31 @@
-<%- model_class = Product -%>
+<style> 
+
+.col-centered{
+    float: none;
+    margin: 0 auto;
+}
+
+</style>
+
+
 <div class="page-header">
-  <h1><%=t '.title', :default => [:'helpers.titles.new', 'New %{model}'], :model => Product %></h1>
+    
 </div>
-<%= render :partial => 'form' %>
+
+<div class="row">
+    <div class="col-md-8 col-centered">
+        
+        <%= form_tag('amazon_url') do %>
+            <div class="col-md-8">
+                <%= text_field_tag 'amazone_product_page_url','' ,class: 'form-control', placeholder: 'Paste an Amzon.in URL' %>
+            </div>
+    </div>
+    
+      <div><%= submit_tag 'Fetch Product Details', :class => 'btn btn-primary' %></div>
+
+    <% end %>
+
+        
+</div>
+
 

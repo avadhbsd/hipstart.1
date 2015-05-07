@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150501130226) do
+ActiveRecord::Schema.define(version: 20150502021519) do
 
   create_table "categories", force: true do |t|
     t.string   "name"
@@ -32,12 +32,13 @@ ActiveRecord::Schema.define(version: 20150501130226) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "is_featured"
   end
 
   add_index "collections", ["user_id"], name: "index_collections_on_user_id"
 
   create_table "products", force: true do |t|
-    t.decimal  "price"
+    t.string   "price"
     t.string   "name"
     t.string   "brand"
     t.integer  "user_id"
@@ -47,6 +48,12 @@ ActiveRecord::Schema.define(version: 20150501130226) do
     t.string   "author"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "small_image_url"
+    t.string   "big_image_url"
+    t.string   "med_image_url"
+    t.string   "product_page_url"
+    t.string   "list_price"
+    t.string   "offer_price"
   end
 
   add_index "products", ["collection_id"], name: "index_products_on_collection_id"
@@ -81,6 +88,7 @@ ActiveRecord::Schema.define(version: 20150501130226) do
     t.string   "provider"
     t.string   "uid"
     t.string   "name"
+    t.boolean  "is_featured"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

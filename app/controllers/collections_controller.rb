@@ -14,6 +14,7 @@ class CollectionsController < ApplicationController
   # GET /collections/1
   # GET /collections/1.json
   def show
+    @featured_collections = Collection.where(:is_featured => true)
   end
 
   # GET /collections/new

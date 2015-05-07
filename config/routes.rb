@@ -1,14 +1,14 @@
 Rails.application.routes.draw do
   get 'pages/index'
 
-  resources :profiles
-
+  post "products/amazon_url", to: "products#amazon_url"
+  
   resources :collections
 
   resources :products do
-  #->Prelang (voting/acts_as_votable)
+    
   member do
-    get "vote"
+    get "vote" #->Prelang (voting/acts_as_votable)
   end
 end
 
